@@ -9,5 +9,6 @@ namespace CEFPeliculas.Entidades
         public string Biografia { get; set; }
         //[Column(TypeName = "Date")]
         public DateTime? fechaNacimiento { get; set; }
+        public HashSet<PeliculaActor> PeliculasActores { get; set; }
     }
 }
