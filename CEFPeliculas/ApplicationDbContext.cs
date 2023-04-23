@@ -1,5 +1,7 @@
 ﻿using CEFPeliculas.Entidades;
+using CEFPeliculas.Entidades.Configuraciones;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace CEFPeliculas
 {
@@ -17,50 +19,14 @@ namespace CEFPeliculas
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //Genero API FLUENTE
-            modelBuilder.Entity<Genero>().HasKey(p => p.Id);
-            modelBuilder.Entity < Genero> ().Property(p => p.Nombre)
-                .HasMaxLength(150)
-                .IsRequired()
-                .HasColumnName("NombreGenero")
-             ;
-            //Actor Api Fluente
-            modelBuilder.Entity<Actor>().HasKey(p => p.Id);
-            modelBuilder.Entity<Actor>().Property(p => p.Nombre)
-                .HasMaxLength(150)
-                .IsRequired()
-            ;
+            //API FLUENTE GENERO CONFIG
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             //Cine Api Fluente
-            modelBuilder.Entity<Cine>().Property(p => p.Nombre)
-                .HasMaxLength(150)
-                .IsRequired()
-                ;
-     
-            //Peliculas Api Fluente
-            modelBuilder.Entity<Pelicula>().Property(p => p.Titulo)
-                .HasMaxLength(250)
-                .IsRequired()
-                ;
-            ///modelBuilder.Entity<Pelicula>().Property(p => p.FechaEstreno)
-               // .HasColumnType("date")
-               // ;
-            modelBuilder.Entity<Pelicula>().Property(p => p.PosterURL)
-                .HasMaxLength(500)
-                .IsUnicode(false)
-                ;
-            //CineOferta Api Fluente
-            modelBuilder.Entity<CineOferta>().Property(p => p.PorcentajeDescuento)
-                .HasPrecision(precision: 5, scale: 2);
-            //SALA CINES API FLUENTE
-            modelBuilder.Entity<SalaCine>().Property(p => p.Precio)
-             .HasPrecision(precision: 9, scale: 2)
-             ;
-            modelBuilder.Entity<SalaCine>().Property(p => p.TipoSalaCine)
-                .HasDefaultValue(TipoSalaCine.DosDimensiones);
-            //PELICULA ACTOR API FLUENTE
-            modelBuilder.Entity<PeliculaActor>().HasKey(p => new { p.PeliculaId, p.ActorId });
-            modelBuilder.Entity<PeliculaActor>().Property(p => p.Personaje)
-                .HasMaxLength(150);
+            /*     modelBuilder.Entity<Cine>().Property(p => p.Nombre)
+                    .HasMaxLength(150)
+                    .IsRequired()
+                    ;*/
+       
             
             //TABLAS
             modelBuilder.Entity<Genero>().ToTable(name: "tblGenero", schema: "Cine");

@@ -1,18 +1,24 @@
 using CEFPeliculas;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(op => op.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(opciones => opciones.UseSqlServer(connectionString,
-    sqlserver => sqlserver.UseNetTopologySuite()));
+builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
+        {
+            opciones.UseSqlServer(connectionString, sqlserver => sqlserver.UseNetTopologySuite());
+            //mas rapido el get
+            opciones.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        }
+    );
 
 var app = builder.Build();
 

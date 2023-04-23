@@ -13,7 +13,7 @@ using NetTopologySuite.Geometries;
 namespace CEFPeliculas.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230326235106_Inicial1")]
+    [Migration("20230331034317_Inicial1")]
     partial class Inicial1
     {
         /// <inheritdoc />
